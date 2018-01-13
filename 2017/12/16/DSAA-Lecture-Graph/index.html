@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DSAA," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Lecture notes after class.">
+<meta name="keywords" content="DSAA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DSAA Lecture09 Graph">
+<meta property="og:url" content="http://yoursite.com/2017/12/16/DSAA-Lecture-Graph/index.html">
+<meta property="og:site_name" content="sheepmanontheshore">
+<meta property="og:description" content="Lecture notes after class.">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/Users/apple/Image%20Hosting/BFS%201.jpg">
+<meta property="og:image" content="http://yoursite.com/Users/apple/Image%20Hosting/BFS%202.jpg">
+<meta property="og:image" content="http://yoursite.com/Users/apple/Image%20Hosting/Edge%20Classification.jpg">
+<meta property="og:updated_time" content="2018-01-05T04:38:22.497Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DSAA Lecture09 Graph">
+<meta name="twitter:description" content="Lecture notes after class.">
+<meta name="twitter:image" content="http://yoursite.com/Users/apple/Image%20Hosting/BFS%201.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/16/DSAA-Lecture-Graph/"/>
+
+
+
+
+
+  <title>DSAA Lecture09 Graph | sheepmanontheshore</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">sheepmanontheshore</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/16/DSAA-Lecture-Graph/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sheepman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/finnaa.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sheepmanontheshore">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DSAA Lecture09 Graph</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-16T10:17:04+08:00">
+                2017-12-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Lecture notes after class.</p>
+<a id="more"></a>
+<h2 id="Lecture-09-Graph"><a href="#Lecture-09-Graph" class="headerlink" title="Lecture 09: Graph"></a>Lecture 09: Graph</h2><blockquote>
+<p>Remain to do: Learn more about BFS&amp;DFS, shortest path, LAB  </p>
+<ul>
+<li>How to calculte the shortest path using BFS  </li>
+<li>BFS tree, height? 做LAB中没有搭建出树诶</li>
+</ul>
+</blockquote>
+<ul>
+<li>Concepts</li>
+<li>Traversal<ul>
+<li>Breath First Search (SSSP)</li>
+<li>Depth First Search (DAG, topological sort)</li>
+</ul>
+</li>
+<li>Minimum Spanning Tree (<strong>MST</strong>，Problem D)</li>
+<li>Shortest Path Algorithm (SP)</li>
+</ul>
+<h2 id="Concepts"><a href="#Concepts" class="headerlink" title="Concepts"></a>Concepts</h2><ol>
+<li>Undirected Graph &amp; Directed Graph</li>
+<li>definition of <strong>Path*</strong> Recall definition of <em>sequence</em>: <em>A path</em> in G is a <em>sequence</em> of nodes (v1,v2,…,vk) such that<ul>
+<li>vi和vi+1之间都有edge  </li>
+</ul>
+</li>
+<li>Cycle: <mark> k≥4 ??? </mark></li>
+<li>In an undirected graph, <strong>degree</strong> of vertex u is the <strong>number of edges</strong> of u.</li>
+<li>In a directed graph, the <strong>out-degree</strong> of a vertex u is the number of <strong>outgoing edges</strong> of u, the <strong>in-degree</strong> is the number of its <strong>incoming edges</strong>.</li>
+<li><strong>Connected Graph</strong>: An <u>undirected</u> graph G=(V,E) is connected if for any two distinct vertices u and v, G has a path from u to v. (MST?)</li>
+<li><strong>Graph, Tree, Forest</strong>: A tree is a connected undirected graph with no cycle. Forest is a set of disjoint trees.</li>
+</ol>
+<h2 id="Construct-Graph"><a href="#Construct-Graph" class="headerlink" title="Construct Graph"></a>Construct Graph</h2><table>
+<thead>
+<tr>
+<th>Ways</th>
+<th>查找边</th>
+<th>遍历</th>
+<th>Undirected G</th>
+<th>Directed G</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ajacency List</td>
+<td>O(v)</td>
+<td>O(1)</td>
+<td>O(V+E)</td>
+<td>O(V+E)</td>
+</tr>
+<tr>
+<td>Ajacency Matrix</td>
+<td>O(1)</td>
+<td>O(v)</td>
+<td>O(V^2)</td>
+<td>O(V^2)</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;      </p>
+<h2 id="Breadth-First-Search"><a href="#Breadth-First-Search" class="headerlink" title="Breadth First Search"></a>Breadth First Search</h2><ul>
+<li><strong>SSSP</strong>(single source shortest path as an example): Shortest Path(unit weight: least edges), e.g., v1 to vk, length of path: k-1</li>
+<li>BFS can solve this problem in O(V+E) time.</li>
+</ul>
+<h3 id="BFS-Algorithm"><a href="#BFS-Algorithm" class="headerlink" title="BFS Algorithm"></a>BFS Algorithm</h3><p><strong>Pseudocode</strong>  </p>
+<pre><code>· create a queue Q. Insert the source vertex s into Q. Mark s visited.  
+· while Q is not empty  
+    · De-queue v from Q (note: the first vertex)
+    · For every out-neighbor u of v that visit[u]==false
+        1. Enqueue u into Q, visit[u]=true;
+        2. *//Make u a child of v in the BFS tree T.*  
+· end 
+</code></pre><ul>
+<li>Note: When we finish this, there may still remain vertex that hadn’t been visited, which means that they cannot be reached from the source vertex.</li>
+<li>Back to the SSSP problem: the shortest path from the source vertex a to any vertex x is exactly the path from a to node x in the BFS tree we construct.</li>
+<li><mark>Complexity Analysis</mark><br>  <img src="/Users/apple/Image Hosting/BFS 1.jpg" alt=""><br>  <img src="/Users/apple/Image Hosting/BFS 2.jpg" alt=""></li>
+</ul>
+<p>&nbsp;      </p>
+<h2 id="Depth-First-Search"><a href="#Depth-First-Search" class="headerlink" title="Depth First Search"></a>Depth First Search</h2><ul>
+<li>We focus on directed graphs  </li>
+<li>detecting whether the input graph contains <strong>cycles</strong>  </li>
+</ul>
+<h3 id="Directed-Cyclic-Graph-DAG"><a href="#Directed-Cyclic-Graph-DAG" class="headerlink" title="Directed Cyclic Graph(DAG)"></a>Directed Cyclic Graph(<strong>DAG</strong>)</h3><p>DAG: contains no cycles, e.g., spark, tensorflow</p>
+<h3 id="The-Cycle-Detection-Problem"><a href="#The-Cycle-Detection-Problem" class="headerlink" title="The Cycle Detection Problem"></a>The Cycle Detection Problem</h3><p>G=(V,E) be a directed graph, determin whether it is a DAG.<br>This problem can be solved in O(V+E) time by using DFS algorithm.</p>
+<h3 id="DFS-algotithm"><a href="#DFS-algotithm" class="headerlink" title="DFS algotithm"></a>DFS algotithm</h3><p>output a tree, DFS-tree<br><strong>Pseudocode</strong>  </p>
+<pre><code>Create a Stack S. Pick an arbitrary vertex v. Push v into S. Mark v visited.
+While (!S.empty())
+    int v = S.front();//don&apos;t pop it!
+    Q: V has an unvisited out-neighbor?
+        1. Yes: let it be u
+                Push u into S, visited[u]=true;
+                Make u a child of v in the DFS-tree T;
+        2. NO: pop v from S;
+end while
+If there still exist unvisited vertices, repeat the above by restarting fot an arbitrary unvisited vertex v&apos;. Creating a new DFS tree rooted at v&apos;.
+</code></pre><p>Time complexity: O(V+E)</p>
+<h3 id="Edge-Classification"><a href="#Edge-Classification" class="headerlink" title="Edge Classification"></a>Edge Classification</h3><blockquote>
+<p><img src="/Users/apple/Image Hosting/Edge Classification.jpg" alt=""><br>左边图中的每一条边，在右边的树中查找。  </p>
+<ul>
+<li>Cycle Detection: No backward edges, then G is a DAG.</li>
+</ul>
+</blockquote>
+<p>&nbsp;      </p>
+<h3 id="Topological-Order"><a href="#Topological-Order" class="headerlink" title="Topological Order"></a>Topological Order</h3><ul>
+<li>先修课程，利用degree为0的解</li>
+<li>Topo Sort Alogorithm<br>  Create an empty list L;<br>  Run DFS on G, whenever a vertex v turns red(popped from the stack), append it to L;<br>  Output the reverse order of L.<br>Note: If not a DAG, count number of vertecies popped out.</li>
+</ul>
+<p><strong>LAB9</strong><br>A) 邻接矩阵<br>B) 是否存在路径<br>C) Block<br>D）Kruskal算法 最小生成图<br>E）判断是否是二分图<br>F) topo sort  </p>
+<pre><code>TBR...
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DSAA/" rel="tag"># DSAA</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/07/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/19/常用命令/" rel="prev" title="常用命令">
+                常用命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/finnaa.png"
+                alt="sheepman" />
+            
+              <p class="site-author-name" itemprop="name">sheepman</p>
+              <p class="site-description motion-element" itemprop="description">“Dance,” said the Sheep Man. “Yougottadance. Aslongasthemusicplays. Yougottadance. Don’teventhinkwhy. Starttothink, yourfeetstop. Yourfeetstop, wegetstuck. Wegetstuck, you’restuck. Sodon’tpayanymind, nomatterhowdumb. Yougottakeepthestep. Yougottalimberup. Yougottaloosenwhatyoubolteddown. Yougottauseallyougot. Weknowyou’retired, tiredandscared. Happenstoeveryone, okay? Justdon’tletyourfeetstop.”</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lecture-09-Graph"><span class="nav-number">1.</span> <span class="nav-text"><a href="#Lecture-09-Graph" class="headerlink" title="Lecture 09: Graph"></a>Lecture 09: Graph</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Concepts"><span class="nav-number">2.</span> <span class="nav-text"><a href="#Concepts" class="headerlink" title="Concepts"></a>Concepts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Construct-Graph"><span class="nav-number">3.</span> <span class="nav-text"><a href="#Construct-Graph" class="headerlink" title="Construct Graph"></a>Construct Graph</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Breadth-First-Search"><span class="nav-number">4.</span> <span class="nav-text"><a href="#Breadth-First-Search" class="headerlink" title="Breadth First Search"></a>Breadth First Search</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BFS-Algorithm"><span class="nav-number">4.1.</span> <span class="nav-text"><a href="#BFS-Algorithm" class="headerlink" title="BFS Algorithm"></a>BFS Algorithm</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Depth-First-Search"><span class="nav-number">5.</span> <span class="nav-text"><a href="#Depth-First-Search" class="headerlink" title="Depth First Search"></a>Depth First Search</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Directed-Cyclic-Graph-DAG"><span class="nav-number">5.1.</span> <span class="nav-text"><a href="#Directed-Cyclic-Graph-DAG" class="headerlink" title="Directed Cyclic Graph(DAG)"></a>Directed Cyclic Graph(<strong>DAG</strong>)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Cycle-Detection-Problem"><span class="nav-number">5.2.</span> <span class="nav-text"><a href="#The-Cycle-Detection-Problem" class="headerlink" title="The Cycle Detection Problem"></a>The Cycle Detection Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DFS-algotithm"><span class="nav-number">5.3.</span> <span class="nav-text"><a href="#DFS-algotithm" class="headerlink" title="DFS algotithm"></a>DFS algotithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Edge-Classification"><span class="nav-number">5.4.</span> <span class="nav-text"><a href="#Edge-Classification" class="headerlink" title="Edge Classification"></a>Edge Classification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Topological-Order"><span class="nav-number">5.5.</span> <span class="nav-text"><a href="#Topological-Order" class="headerlink" title="Topological Order"></a>Topological Order</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sheepman</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
